@@ -1,101 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Universal Video Downloader</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #fff; padding: 15px; box-sizing: border-box; }
-        .card { background: #fff; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; text-align: center; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h2 { margin-bottom: 20px; color: #1e293b; font-size: 22px; }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 16px; outline: none; box-sizing: border-box; color: #000; background: #f8fafc; }
-        
-        /* Video Preview Area */
-        #previewArea { display: none; margin-bottom: 20px; background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
-        #previewArea iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; color: #fff; transition: 0.3s; }
-        .btn-vid { background: #2563eb; }
-        .btn-aud { background: #10b981; }
-        .btn:active { transform: scale(0.98); }
-
-        #status { font-size: 14px; font-weight: bold; color: #2563eb; margin-top: 15px; min-height: 20px; }
-        .loader { display: none; border: 4px solid #f3f3f3; border-top: 4px solid #2563eb; border-radius: 50%; width: 25px; height: 25px; animation: spin 1s linear infinite; margin: 10px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-
-<div class="card">
-    <h2>Video Downloader</h2>
-    <input type="text" id="videoUrl" placeholder="Paste link (YouTube, Shorts, FB...)" oninput="handlePreview()">
-    
-    <div id="previewArea"></div>
-    <div class="loader" id="loader"></div>
-    <p id="status"></p>
-
-    <div class="btn-group">
-        <button class="btn btn-vid" onclick="startDownload('highest')">DOWNLOAD VIDEO</button>
-        <button class="btn btn-aud" onclick="startDownload('mp3')">DOWNLOAD MP3</button>
-    </div>
-
-    <div style="margin-top: 25px;">
-        <script type="text/javascript">
-            atOptions = { 'key' : 'ac35df741283ad0f8a59af507285bc03', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
-        </script>
-        <script type="text/javascript" src="https://sponsorinserttimeout.com/ac35df741283ad0f8a59af507285bc03/invoke.js"></script>
-    </div>
-</div>
-
-<iframe id="downloadFrame" style="display:none;"></iframe>
-
-<script>
-    const SERVER_URL = "https://downlodervdo1cr.onrender.com";
-
-    function handlePreview() {
-        const url = document.getElementById('videoUrl').value.trim();
-        const area = document.getElementById('previewArea');
-        let videoId = "";
-
-        if (url.includes("youtube.com/shorts/")) {
-            videoId = url.split("shorts/")[1].split("?")[0];
-        } else if (url.includes("v=")) {
-            videoId = url.split("v=")[1].split("&")[0];
-        } else if (url.includes("youtu.be/")) {
-            videoId = url.split("youtu.be/")[1].split("?")[0];
-        }
-
-        if (videoId) {
-            area.style.display = "block";
-            area.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-        } else {
-            area.style.display = "none";
-        }
-    }
-
     function startDownload(quality) {
         const urlInput = document.getElementById('videoUrl').value.trim();
         const status = document.getElementById('status');
         const loader = document.getElementById('loader');
-        const frame = document.getElementById('downloadFrame');
 
         if(!urlInput) return alert("Please paste a link first!");
 
         loader.style.display = "block";
-        status.innerText = "Requesting Server... Stay on this page.";
+        status.innerText = "Requesting Server... Please wait.";
         
-        const downloadRequest = `${SERVER_URL}/download?url=${encodeURIComponent(urlInput)}&quality=${quality}`;
+        // আপনার রেন্ডার ইউআরএল
+        const RENDER_URL = "https://downloadvdo99cr.onrender.com";
+        const finalUrl = `${RENDER_URL}/download?url=${encodeURIComponent(urlInput)}&quality=${quality}`;
 
-        // Triggers download in background to bypass Render loading screen
-        frame.src = downloadRequest;
+        // সরাসরি উইন্ডো লোকেশন পরিবর্তন করে ডাউনলোড ট্রিগার করা
+        window.location.href = finalUrl;
 
         setTimeout(() => {
             loader.style.display = "none";
-            status.innerText = "Download started. Please check your notification/downloads.";
-        }, 8000);
+            status.innerText = "Download requested! Check your phone's notification bar.";
+        }, 5000);
     }
-</script>
-
-</body>
-</html>
