@@ -51,7 +51,7 @@
 <iframe id="downloadFrame" style="display:none;"></iframe>
 
 <script>
-    const RENDER_URL = "https://downlodervdo1cr.onrender.com";
+    const SERVER_URL = "https://downlodervdo1cr.onrender.com";
 
     function handlePreview() {
         const url = document.getElementById('videoUrl').value.trim();
@@ -85,14 +85,14 @@
         loader.style.display = "block";
         status.innerText = "Requesting Server... Stay on this page.";
         
-        const downloadRequest = `${RENDER_URL}/download?url=${encodeURIComponent(urlInput)}&quality=${quality}`;
+        const downloadRequest = `${SERVER_URL}/download?url=${encodeURIComponent(urlInput)}&quality=${quality}`;
 
-        // Silent Download: Using hidden iframe prevents black screen redirect
+        // Triggers download in background to bypass Render loading screen
         frame.src = downloadRequest;
 
         setTimeout(() => {
             loader.style.display = "none";
-            status.innerText = "Download requested. Please wait for the file.";
+            status.innerText = "Download started. Please check your notification/downloads.";
         }, 8000);
     }
 </script>
